@@ -1,7 +1,7 @@
-from typing import Dict
+from typing import Dict, List
 from keras.layers import Input, Dense
 from keras.models import Model
-from mnist_dataset_class import Dataset
+from dataset_class import Dataset
 
 class Autoencoder:
     def __init__(self, num_hidden_units: int) -> None:
@@ -60,3 +60,12 @@ class Autoencoder:
         mse = self.model.evaluate(test_digit_dataset, test_digit_dataset)
         
         return mse
+    
+    def extract_layer_weights(self, layer: int) -> List[float]:
+        """
+        Returns weights of specified layer.
+        """
+        model_layer = self.model.layers[layer]
+        weights = model_layer.get_weights()[0]
+
+        return weights
